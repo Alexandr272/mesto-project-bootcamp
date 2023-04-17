@@ -10,6 +10,9 @@
     background-repeat: no-repeat;
     outline: none;
     border: none;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21.78px;
 }
 .popup__button-save:hover{
     cursor: pointer;
@@ -19,5 +22,7 @@
     .popup__button-save{
         width: 238px;
         height: 46px;
+        font-size: 14px;
+        line-height: 16.94px;
     }
 }
