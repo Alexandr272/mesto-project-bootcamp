@@ -4,7 +4,8 @@
     align-self: center;
     border: 2px solid #ffffff;
     background-color: transparent;
-    background-image: url('../../../image/profile/Add-Button-mobile.svg');
+    background-image: url('../../../image/profile/plus-Vector.svg');
+    background-size: 22px;
     margin: 0;
     padding: 0;
     background-position: center;
@@ -19,7 +20,8 @@
 }
 @media screen and (max-width: 740px) {
     .profile__add-button{
-       margin: 0 auto;
-       width: 282px;
+        background-size: 16px;
+        margin: 0 auto;
+        width: 282px;
     }
 }
