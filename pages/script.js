@@ -1,41 +1,68 @@
-// Отрытие закрытие попап профайл
-document.querySelector('.profile__edit-button').addEventListener('click', function () {
-    document.querySelector('.popup_profile').classList.add('popup_opened')
-})
-
-document.querySelector('.popup__button-close').addEventListener('click', function () {
-    document.querySelector('.popup_profile').classList.remove('popup_opened')
-})
-
-// Попап добавление карточки
-document.querySelector('.profile__add-button').addEventListener('click', function () {
-    document.querySelector('.popup_place').classList.add('popup_opened')
-})
-
-document.querySelector('.popup__button-close_place').addEventListener('click', function () {
-    document.querySelector('.popup_place').classList.remove('popup_opened')
-})
+// Попап профайл
+const editBtn = document.querySelector('.profile__edit-button')
+const popupProfile = document.querySelector('.popup_profile')
+const closeBtn = document.querySelector('.popup__button-close_profile')
+// Попап Карточки
+const addBtn = document.querySelector('.profile__add-button')
+const popupPlace = document.querySelector('.popup_place')
+const closeBtnPlace = document.querySelector('.popup__button-close_place')
 
 // Форма попап профайл
-const formElement = document.querySelector('.popup__container')
+const formElement = document.querySelector('.popup__container_profile')
 const nameInput = document.querySelector('.popup__input-name')
 const aboutInput = document.querySelector('.popup__input-about')
 
+const profileTitle = document.querySelector('.profile__title')
+const profileSubtitle =  document.querySelector('.profile__subtitle')
+const saveBtn = document.querySelector('.popup__button-save_profile')
+
+const inputName = document.querySelector('.popup__input-name')
+const inputAbout = document.querySelector('.popup__input-about')
+
+// Добавление карточек через JS
+const placesContainer = document.querySelector('.elements');
+const placeTemplate = document.querySelector('#template-card').content;
+
+// Добавление карточки
+const formPlace = document.querySelector('.popup__container_place')
+const titleInput = document.querySelector('.popup__input-title')
+const linkInput = document.querySelector('.popup__input-link')
+
+const saveBtnPlace = document.querySelector('.popup__button-save_place')
+
+// Отрытие закрытие попап профайл
+editBtn.addEventListener('click', function () {
+    popupProfile.classList.add('popup_opened')
+})
+
+closeBtn.addEventListener('click', function () {
+    popupProfile.classList.remove('popup_opened')
+})
+
+// Открытие закрытие попап карточки
+addBtn.addEventListener('click', function () {
+    popupPlace.classList.add('popup_opened')
+})
+
+closeBtnPlace.addEventListener('click', function () {
+    popupPlace.classList.remove('popup_opened')
+})
+
+// Форма попап профайл
+
 function handleFormSubmit(evt) {
     evt.preventDefault();
-    document.querySelector('.profile__title').textContent = nameInput.value;
-    document.querySelector('.profile__subtitle').textContent = aboutInput.value;
+    profileTitle.textContent = nameInput.value;
+    profileSubtitle.textContent = aboutInput.value;
 }
 
-document.querySelector('.popup__button-save').addEventListener('click', function () {
-  document.querySelector('.popup_profile').classList.remove('popup_opened')
+saveBtn.addEventListener('click', function () {
+  popupProfile.classList.remove('popup_opened')
 })
 
-document.querySelector('.popup__button-close').addEventListener('click', function () {
-    document.querySelector('.popup__input-name').value = '';
-})
-document.querySelector('.popup__button-close').addEventListener('click', function () {
-    document.querySelector('.popup__input-about').value = '';
+closeBtn.addEventListener('click', function () {
+  inputName.value = '';
+  inputAbout.value = '';
 })
 
 formElement.addEventListener('submit', handleFormSubmit); 
@@ -68,11 +95,9 @@ const cards = [
     }
   ];
 
-  const placesContainer = document.querySelector('.elements');
-  const placeTemplate = document.querySelector('#template-card').content;
-
-  function render () {
-    cards.forEach(renderCard)
+   function render () {
+    
+   cards.forEach(renderCard)
   }
 
   function renderCard ({ name, link }) {
@@ -84,19 +109,10 @@ const cards = [
 
   render();
 
-  // Поставить лайк на кнопку
-  const likeButton = document.querySelectorAll('.element__button-like');
-
-  likeButton.forEach(like => {
-    like.addEventListener('click', () => {
-      like.classList.toggle('element__button-like_active');
-    });
-  });
-
-  // Удаление карточки
+// Удаление карточки
   const delCards = document.querySelectorAll('.element__button-del');
   
-  delCards.forEach( (el) => {
+  delCards.forEach((el) => {
     el.addEventListener('click', removeParent);
   });
   
@@ -106,11 +122,7 @@ const cards = [
       del.remove();
   }
 
-  // Добавление карточки
-
-const formPlace = document.querySelector('.popup__container_place')
-const titleInput = document.querySelector('.popup__input-title')
-const linkInput = document.querySelector('.popup__input-link')
+// Добавление карточки
 
 function addCard (evt) {
   evt.preventDefault();
@@ -118,12 +130,45 @@ function addCard (evt) {
     name: titleInput.value,
     link: linkInput.value,
   };
+
   cards.unshift(newCard)
-  console.log('cards', cards)
+  
+  renderCard(newCard)
 }
 
 formPlace.addEventListener('submit', addCard)
 
-document.querySelector('.popup__button-save_place').addEventListener('click', function () {
-  document.querySelector('.popup_place').classList.remove('popup_opened')
+closeBtnPlace.addEventListener('click', function () {
+  titleInput.value = '';
+  linkInput.value = '';
 })
+
+saveBtnPlace.addEventListener('click', function () {
+  popupPlace.classList.remove('popup_opened')
+})
+
+// Попап с картинкой
+
+const imgBtn = document.querySelectorAll('.element__photo')
+const popupImg = document.querySelector('.popup_img')
+const closeBtnImg = document.querySelector('.popup__button-close_img')
+
+imgBtn.forEach(photo => {
+  photo.addEventListener('click', () => {
+    document.querySelector('.popup__photo').src = photo.src
+    popupImg.classList.add('popup_opened')
+  })
+})
+
+closeBtnImg.addEventListener('click', function () {
+  popupImg.classList.remove('popup_opened')
+})
+
+// Поставить лайк на кнопку
+const likeButton = document.querySelectorAll('.element__button-like');
+
+likeButton.forEach(like => {
+  like.addEventListener('click', () => {
+    like.classList.toggle('element__button-like_active');
+  });
+});
