@@ -11,15 +11,15 @@ const closeBtnPlace = document.querySelector('.popup__button-close_place')
 const formElement = document.querySelector('.popup__container_profile')
 const nameInput = document.querySelector('.popup__input-name')
 const aboutInput = document.querySelector('.popup__input-about')
-
 const profileTitle = document.querySelector('.profile__title')
 const profileSubtitle =  document.querySelector('.profile__subtitle')
+
+const profileTitleValue = profileTitle.textContent
+const profileSubtitleValue = profileSubtitle.textContent
+
 const saveBtn = document.querySelector('.popup__button-save_profile')
 
-const inputName = document.querySelector('.popup__input-name')
-const inputAbout = document.querySelector('.popup__input-about')
-
-// Добавление карточек через JS
+// Вывод карточек
 const placesContainer = document.querySelector('.elements');
 const placeTemplate = document.querySelector('#template-card').content;
 
@@ -53,21 +53,24 @@ closeBtnPlace.addEventListener('click', function () {
 function handleFormSubmit(evt) {
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
-    profileSubtitle.textContent = aboutInput.value;
+    profileSubtitle.textContent = aboutInput.value;   
 }
+
+nameInput.value = profileTitleValue
+aboutInput.value = profileSubtitleValue   
 
 saveBtn.addEventListener('click', function () {
   popupProfile.classList.remove('popup_opened')
 })
 
-closeBtn.addEventListener('click', function () {
-  inputName.value = '';
-  inputAbout.value = '';
-})
+// closeBtn.addEventListener('click', function () {
+//   // inputName.value = '';
+//   // inputAbout.value = '';
+// })
 
 formElement.addEventListener('submit', handleFormSubmit); 
 
-// Добавление карточек через JS
+// Вывод карточек
 const cards = [
     {
       name: 'Архыз',
@@ -104,12 +107,14 @@ const cards = [
     const placeElement = placeTemplate.querySelector('.element').cloneNode(true);
     placeElement.querySelector('.element__info').textContent = name;
     placeElement.querySelector('.element__photo').src = link;
-    placesContainer.append(placeElement);
+    placesContainer.prepend(placeElement);
   }
 
   render();
 
 // Удаление карточки
+
+function removeCard () {
   const delCards = document.querySelectorAll('.element__button-del');
   
   delCards.forEach((el) => {
@@ -121,7 +126,10 @@ const cards = [
       
       del.remove();
   }
+}
 
+removeCard()
+  
 // Добавление карточки
 
 function addCard (evt) {
@@ -130,18 +138,22 @@ function addCard (evt) {
     name: titleInput.value,
     link: linkInput.value,
   };
-
-  cards.unshift(newCard)
   
   renderCard(newCard)
+
+  likeToggle()
+
+  removeCard()
+  
+  imgPlus()
 }
 
 formPlace.addEventListener('submit', addCard)
 
-closeBtnPlace.addEventListener('click', function () {
-  titleInput.value = '';
-  linkInput.value = '';
-})
+// closeBtnPlace.addEventListener('click', function () {
+//   titleInput.value = '';
+//   linkInput.value = '';
+// })
 
 saveBtnPlace.addEventListener('click', function () {
   popupPlace.classList.remove('popup_opened')
@@ -152,23 +164,33 @@ saveBtnPlace.addEventListener('click', function () {
 const imgBtn = document.querySelectorAll('.element__photo')
 const popupImg = document.querySelector('.popup_img')
 const closeBtnImg = document.querySelector('.popup__button-close_img')
+const popupPhoto = document.querySelector('.popup__photo')
 
-imgBtn.forEach(photo => {
-  photo.addEventListener('click', () => {
-    document.querySelector('.popup__photo').src = photo.src
-    popupImg.classList.add('popup_opened')
+function imgPlus () {
+  imgBtn.forEach(photo => {
+    photo.addEventListener('click', () => {
+      popupPhoto.src = photo.src
+      popupImg.classList.add('popup_opened')
+    })
   })
-})
+}
+
+imgPlus()
 
 closeBtnImg.addEventListener('click', function () {
   popupImg.classList.remove('popup_opened')
 })
 
 // Поставить лайк на кнопку
-const likeButton = document.querySelectorAll('.element__button-like');
+function likeToggle () {
+  const likeButton = document.querySelectorAll('.element__button-like');
 
-likeButton.forEach(like => {
-  like.addEventListener('click', () => {
-    like.classList.toggle('element__button-like_active');
+  likeButton.forEach(like => {
+    like.addEventListener('click', () => {
+      like.classList.toggle('element__button-like_active');
   });
 });
+}
+
+likeToggle()
+
